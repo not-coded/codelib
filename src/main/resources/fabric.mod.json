@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "codelib",
+  "version": "${version}",
+
+  "name": "CodeLib",
+  "description": "A Minecraft Fabric API/Library that provides useful features.",
+  "authors": [
+    "NotCoded"
+  ],
+  "contact": {
+    "homepage": "https://notcoded.is-a.dev/",
+    "sources": "https://github.com/not-coded/codelib"
+  },
+
+  "license": "GPL-3.0",
+  "environment": "*",
+  "mixins": [
+    "codelib.mixins.json"
+  ],
+
+  "depends": {
+    "minecraft": ["1.16.3-combat.8.c", "1.16.2-1.16.combat-6"]
+  }
+}
