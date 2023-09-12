@@ -100,7 +100,7 @@ public class StructureMap {
     }
 
     /**
-     * Pastes a map with some pre-set parameters.
+     * Returns a command which you can use in the console.
      * @param level The level where is going to get pasted in.
      * @return The command (/setblock ...).
      */
