@@ -13,7 +13,10 @@ did i mention it has **0**, yes **zero** dependencies?
 Add the following to your `gradle.properties`
 ```properties
 # https://github.com/not-coded/codelib
-codelib_version=...
+codelib_version=...+minecraft_version
+
+# Example
+codelib_version=1.0.0+1.20
 ```
 
 And `build.gradle`

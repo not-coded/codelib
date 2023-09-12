@@ -10,7 +10,8 @@
   ],
   "contact": {
     "homepage": "https://notcoded.is-a.dev/",
-    "sources": "https://github.com/not-coded/codelib"
+    "sources": "https://github.com/not-coded/codelib",
+    "issues": "https://github.com/not-coded/codelib/issues"
   },
 
   "license": "GPL-3.0",

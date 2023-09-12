@@ -47,6 +47,8 @@ public class ItemStackUtil {
 
     /**
      * Checks if the inventory has the same item.
+     * @param itemStack2 The original ItemStack.
+     * @param itemStack1 The ItemStack that's going to get compared.
      * @return If the inventory has the same item.
      */
     public static boolean isSameItem(ItemStack itemStack1, ItemStack itemStack2) {
@@ -61,6 +63,7 @@ public class ItemStackUtil {
 
     /**
      * Turns a string into an ItemStack, e.g. diamond_sword.
+     * @param string Name, e.g. diamond_sword.
      * @return ItemStack.
      */
     public static ItemStack stringToItemStack(String string) {
@@ -78,6 +81,8 @@ public class ItemStackUtil {
 
     /**
      * Gets the ItemStack name, e.g. iron_block.
+     * @param itemStack ItemStack.
+     * @param reversible If the String can be turned back into an ItemStack with stringToItemStack.
      * @return ItemStack name.
      */
     public static String itemStackToString(ItemStack itemStack, boolean reversible) {
@@ -89,6 +94,7 @@ public class ItemStackUtil {
 
     /**
      * Gets all the ItemStacks in the player's inventory.
+     * @param player The player.
      * @return ItemStacks in ArrayList.
      */
     public static ArrayList<ItemStack> getInvItems(ServerPlayer player) {
@@ -101,6 +107,7 @@ public class ItemStackUtil {
 
     /**
      * Makes the player's inventory refresh.
+     * @param player The player.
      */
     public static void sendInventoryRefreshPacket(ServerPlayer player) {
         NonNullList<ItemStack> i = NonNullList.create();
@@ -113,7 +120,8 @@ public class ItemStackUtil {
 
     /**
      * Gets the item name, e.g. diamond_sword.
-     * @return Item name.
+     * @param name The name.
+     * @return The Item (nullable).
      */
     public static Item itemFromString(String name) {
         name = name.toLowerCase();

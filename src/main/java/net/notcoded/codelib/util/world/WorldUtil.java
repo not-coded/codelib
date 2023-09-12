@@ -8,7 +8,7 @@ public class WorldUtil {
     /**
      * Gets the world name of a level.
      * @param level The level.
-     * @return If the block position is in between those 2.
+     * @return The name of the world, e.g. minecraft:overworld
      */
     public static String getWorldName(@NotNull Level level) {
         return level.dimension().toString().replaceAll("dimension / ", "").replaceAll("]", "").replaceAll("ResourceKey\\[minecraft:", "");
@@ -17,7 +17,7 @@ public class WorldUtil {
     /**
      * Splits the world name.
      * @param name The name
-     * @return ResourceLocation
+     * @return ResourceLocation, e.g. minecraft (namespace) and overworld (path)
      */
     public static ResourceLocation getWorldName(String name) {
         String[] splitName = name.split(":");
