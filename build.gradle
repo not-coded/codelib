@@ -51,13 +51,13 @@ modrinth {
 	token = System.getenv("MODRINTH_TOKEN")
 	projectId = "codelib"
 	versionNumber = "${project.version}"
-	versionName = "v${project.version}".substring(0, 5) + " | ${project.minecraft_version}"
+	versionName = "v${project.version}".substring(0, 6) + " | ${project.minecraft_version}"
 	versionType = "release"
-	uploadFile = jar
+	uploadFile = remapJar
 	additionalFiles.add(javadocJar)
 	additionalFiles.add(sourcesJar)
-	gameVersions.add("${project.minecraft_version}")
+	gameVersions.add(minecraft_version)
 	loaders.add("fabric")
 	loaders.add("quilt") // i just added it cuz :+1:
-	changelog = "## Look at https://github.com/not-coded/codelib/releases/tag/${project.version}."
+	changelog = "### Look at https://github.com/not-coded/codelib/releases/tag/${project.version}."
 }
