@@ -27,7 +27,7 @@ public class EntityPos {
     }
 
     public EntityPos(Entity entity) {
-        this(entity.getX(), entity.getY(), entity.getZ(), entity.yRot, entity.xRot);
+        this(entity.getX(), entity.getY(), entity.getZ(), entity.getYRot(), entity.getXRot());
     }
 
     public EntityPos(BlockPos blockPos) {
@@ -65,7 +65,7 @@ public class EntityPos {
     }
 
     public BlockPos toBlockPos() {
-        return new BlockPos(this.x, this.y, this.z);
+        return new BlockPos((int) this.x, (int) this.y, (int) this.z);
     }
 
     public BlockVec3 toBlockVec3() {

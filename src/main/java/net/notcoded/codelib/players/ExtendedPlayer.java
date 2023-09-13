@@ -1,14 +1,13 @@
 package net.notcoded.codelib.players;
 
-import net.minecraft.network.protocol.game.ClientboundSoundPacket;
-import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
+import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.*;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.notcoded.codelib.server.ServerTime;
 import net.notcoded.codelib.util.pos.EntityPos;
 import net.notcoded.codelib.util.item.ItemStackUtil;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.protocol.game.ClientboundSetTitlesPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +20,7 @@ public class ExtendedPlayer extends ServerPlayer {
 
     public AccuratePlayer player;
     public ExtendedPlayer(AccuratePlayer player) {
-        super(ServerTime.server, player.get().getLevel(), player.get().getGameProfile(), player.get().gameMode);
+        super(ServerTime.server, player.get().serverLevel(), player.get().getGameProfile());
         this.player = player;
     }
 
@@ -39,37 +38,39 @@ public class ExtendedPlayer extends ServerPlayer {
         }
     }
 
-    public void sendSound(SoundEvent soundEvent, SoundSource soundSource, float volume, float pitch) {
-        sendSound(new EntityPos(this.player.get()), soundEvent, soundSource, volume, pitch);
+    public void sendSound(SoundEvent soundEvent, SoundSource soundSource, float volume, float pitch, long minVolume) {
+        sendSound(Holder.direct(SoundEvent.createVariableRangeEvent(soundEvent.getLocation())), soundSource, volume, pitch, minVolume);
     }
 
-    public void sendSound(EntityPos position, SoundEvent soundEvent, SoundSource soundSource, float volume, float pitch) {
-        this.player.get().connection.send(new ClientboundSoundPacket(soundEvent, soundSource,
-                position.x, position.y, position.z, 16f * volume, pitch));
+    public void sendSound(Holder<SoundEvent> soundEvent, SoundSource soundSource, float volume, float pitch, long minVolume) {
+        sendSound(new EntityPos(this.player.get()), soundEvent, soundSource, volume, pitch, minVolume);
+    }
+
+    public void sendSound(EntityPos position, Holder<SoundEvent> soundEvent, SoundSource soundSource, float volume, float pitch, long minVolume) {
+        this.player.get().connection.send(new ClientboundSoundPacket(soundEvent, soundSource, position.x, position.y, position.z, 16f * volume, pitch, minVolume));
     }
 
     public void stopSound() {
-        this.player.get().connection.send(new ClientboundStopSoundPacket());
+        this.player.get().connection.send(new ClientboundStopSoundPacket(null, null));
     }
 
     public void sendTitle(String title, String sub, int in, int stay, int out) {
         ServerPlayer serverPlayer = this.player.get();
 
-        serverPlayer.connection.send(new ClientboundSetTitlesPacket(in, stay, out));
-        serverPlayer.connection.send(new ClientboundSetTitlesPacket(
-                ClientboundSetTitlesPacket.Type.TITLE, new TextComponent(title)));
-        serverPlayer.connection.send(new ClientboundSetTitlesPacket(
-                ClientboundSetTitlesPacket.Type.SUBTITLE, new TextComponent(sub)));
+        serverPlayer.connection.send(new ClientboundSetTitlesAnimationPacket(in, stay, out));
+        serverPlayer.connection.send(new ClientboundSetTitleTextPacket(
+                Component.literal(title)));
+        serverPlayer.connection.send(new ClientboundSetSubtitleTextPacket(
+                Component.literal(sub)));
     }
 
     public void sendActionbar(String string){
-        this.player.get().connection.send(new ClientboundSetTitlesPacket(
-                ClientboundSetTitlesPacket.Type.ACTIONBAR,
-                new TextComponent(string))
+        this.player.get().connection.send(new ClientboundSetActionBarTextPacket(
+                Component.literal(string))
         );
     }
 
     public void sendDefaultTitleLength() {
-        this.player.get().connection.send(new ClientboundSetTitlesPacket(10, 60, 20));
+        this.player.get().connection.send(new ClientboundSetTitlesAnimationPacket(10, 60, 20));
     }
 }

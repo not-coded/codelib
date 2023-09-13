@@ -2,6 +2,7 @@ package net.notcoded.codelib.util.item;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -99,23 +100,10 @@ public class ItemStackUtil {
      */
     public static ArrayList<ItemStack> getInvItems(ServerPlayer player) {
         ArrayList<ItemStack> fullInv = new ArrayList<>();
-        fullInv.addAll(player.inventory.items);
-        fullInv.addAll(player.inventory.armor);
-        fullInv.addAll(player.inventory.offhand);
+        fullInv.addAll(player.getInventory().items);
+        fullInv.addAll(player.getInventory().armor);
+        fullInv.addAll(player.getInventory().offhand);
         return fullInv;
-    }
-
-    /**
-     * Makes the player's inventory refresh.
-     * @param player The player.
-     */
-    public static void sendInventoryRefreshPacket(ServerPlayer player) {
-        NonNullList<ItemStack> i = NonNullList.create();
-        for (int j = 0; j < player.containerMenu.slots.size(); ++j) {
-            ItemStack itemStack = player.containerMenu.slots.get(j).getItem();
-            i.add(itemStack.isEmpty() ? ItemStack.EMPTY : itemStack);
-        }
-        player.refreshContainer(player.containerMenu, i);
     }
 
     /**
@@ -125,7 +113,7 @@ public class ItemStackUtil {
      */
     public static Item itemFromString(String name) {
         name = name.toLowerCase();
-        return Registry.ITEM.get(new ResourceLocation(name));
+        return BuiltInRegistries.ITEM.get(new ResourceLocation(name));
     }
 
     /**
@@ -148,7 +136,7 @@ public class ItemStackUtil {
         if (slot >= 0 && slot < player.containerMenu.slots.size()) {
             return player.containerMenu.getSlot(slot).getItem();
         } else if (slot == -999) {
-            return player.inventory.getCarried();
+            return player.containerMenu.getCarried();
         } else {
             return null;
         }

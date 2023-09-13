@@ -1,6 +1,6 @@
 package net.notcoded.codelib.util.item;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -21,7 +21,7 @@ public class BlockUtil {
      * @return Block name.
      */
     public static String blockToText(Block block) {
-        String[] splitRegistryKey = Registry.BLOCK.getKey(block).toString().split(":");
+        String[] splitRegistryKey = BuiltInRegistries.BLOCK.getKey(block).toString().split(":");
         if (splitRegistryKey.length < 2) return splitRegistryKey[0];
         return splitRegistryKey[1];
     }

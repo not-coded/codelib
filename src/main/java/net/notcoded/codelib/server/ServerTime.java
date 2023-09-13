@@ -17,7 +17,7 @@ public class ServerTime {
      * @param command The command.
      */
     public static void runCommand(String command) {
-        server.getCommands().performCommand(server.createCommandSourceStack(), command);
+        server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), command);
     }
 
     /**
