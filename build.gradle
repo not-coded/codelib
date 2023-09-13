@@ -2,7 +2,7 @@ plugins {
 	id 'fabric-loom' version '1.3-SNAPSHOT'
 }
 
-version = project.mod_version
+version = project.mod_version + "+" + project.minecraft_version.substring(0, 4)
 group = project.maven_group
 
 base {
