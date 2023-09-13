@@ -1,5 +1,6 @@
 plugins {
 	id 'fabric-loom' version '0.13-SNAPSHOT'
+	id "com.modrinth.minotaur" version "2.+"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -50,4 +51,19 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}" }
 	}
+}
+
+modrinth {
+	token = System.getenv("MODRINTH_TOKEN")
+	projectId = "codelib"
+	versionNumber = "${project.version}"
+	versionName = "v${project.version}".substring(0, 5) + " | ${project.minecraft_version}"
+	versionType = "release"
+	uploadFile = jar
+	additionalFiles.add(javadocJar)
+	additionalFiles.add(sourcesJar)
+	gameVersions.add("${project.minecraft_version}")
+	loaders.add("fabric")
+	loaders.add("quilt") // i just added it cuz :+1:
+	changelog = "## Look at https://github.com/not-coded/codelib/releases/tag/${project.version}."
 }
