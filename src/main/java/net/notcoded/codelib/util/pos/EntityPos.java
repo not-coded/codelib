@@ -1,11 +1,14 @@
 package net.notcoded.codelib.util.pos;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 
+@Environment(EnvType.SERVER)
 public class EntityPos {
 
     public double x;

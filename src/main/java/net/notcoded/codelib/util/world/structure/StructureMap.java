@@ -1,5 +1,7 @@
 package net.notcoded.codelib.util.world.structure;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -9,6 +11,8 @@ import net.notcoded.codelib.util.world.WorldUtil;
 /**
  * Uses Structure Blocks to paste a map using /setblock.
  */
+
+@Environment(EnvType.SERVER)
 public class StructureMap {
 
     // Default

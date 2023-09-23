@@ -5,6 +5,11 @@
 
   "name": "CodeLib",
   "description": "A Minecraft Fabric API/Library that provides useful features.",
+  "entrypoints": {
+    "main": [
+      "net.notcoded.codelib.CodeLib"
+    ]
+  },
   "authors": [
     "NotCoded"
   ],
@@ -22,6 +27,6 @@
   ],
 
   "depends": {
-    "minecraft": "~1.20"
+    "minecraft": ">=1.20"
   }
 }

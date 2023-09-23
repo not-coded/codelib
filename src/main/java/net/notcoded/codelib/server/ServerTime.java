@@ -1,16 +1,20 @@
 package net.notcoded.codelib.server;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.server.MinecraftServer;
+import net.notcoded.codelib.CodeLib;
 
 import java.util.ArrayList;
 
+import static net.notcoded.codelib.CodeLib.server;
+
+@Environment(EnvType.SERVER)
 public class ServerTime {
-    public static MinecraftServer server;
 
     public static void firstTick(MinecraftServer server) {
-        ServerTime.server = server;
+        CodeLib.server = server;
     }
-
 
     /**
      * Runs a command as the server (console).
