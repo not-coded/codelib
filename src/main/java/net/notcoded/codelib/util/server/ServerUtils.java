@@ -1,4 +1,4 @@
-package net.notcoded.codelib.server;
+package net.notcoded.codelib.util.server;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static net.notcoded.codelib.CodeLib.server;
 
 @Environment(EnvType.SERVER)
-public class ServerTime {
+public class ServerUtils {
 
     public static void firstTick(MinecraftServer server) {
         CodeLib.server = server;
@@ -30,6 +30,6 @@ public class ServerTime {
      */
 
     public static void runCommands(ArrayList<String> commands) {
-        commands.forEach(ServerTime::runCommand);
+        commands.forEach(ServerUtils::runCommand);
     }
 }

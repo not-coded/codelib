@@ -8,21 +8,19 @@ import net.minecraft.network.protocol.game.*;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.notcoded.codelib.CodeLib;
-import net.notcoded.codelib.server.ServerTime;
 import net.notcoded.codelib.util.pos.EntityPos;
 import net.notcoded.codelib.util.item.ItemStackUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * Gives more functions to the player
+ */
 @Environment(EnvType.SERVER)
 public class ExtendedPlayer extends ServerPlayer {
-
-    /**
-     * Gives more functions to the player
-     */
-
     public AccuratePlayer player;
+
     public ExtendedPlayer(AccuratePlayer player) {
         super(CodeLib.server, player.get().serverLevel(), player.get().getGameProfile());
         this.player = player;

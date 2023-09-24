@@ -58,6 +58,6 @@ modrinth {
 	additionalFiles.add(sourcesJar)
 	gameVersions.add(minecraft_version)
 	loaders.add("fabric")
-	loaders.add("quilt") // i just added it cuz :+1:
+	loaders.add("quilt")
 	changelog = "### Look at https://github.com/not-coded/codelib/releases/tag/${project.version}."
 }

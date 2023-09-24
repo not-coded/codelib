@@ -8,7 +8,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 
-@Environment(EnvType.SERVER)
 public class EntityPos {
 
     public double x;
@@ -82,6 +81,7 @@ public class EntityPos {
         return Math.sqrt(x*x + y*y + z*z);
     }
 
+    @Environment(EnvType.SERVER)
     public void teleportPlayer(ServerLevel level, ServerPlayer player) {
         player.teleportTo(level, this.x, this.y,this.z,this.yaw,this.pitch);
     }

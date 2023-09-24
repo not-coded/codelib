@@ -17,7 +17,7 @@ public class CodeLib implements ModInitializer {
     public void onInitialize() {
         try {
             loadClient();
-        } catch(NoClassDefFoundError | Exception ignored){
+        } catch(NoClassDefFoundError ignored){
             loadServer();
         }
     }

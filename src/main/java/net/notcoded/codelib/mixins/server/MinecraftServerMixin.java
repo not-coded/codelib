@@ -2,7 +2,7 @@ package net.notcoded.codelib.mixins.server;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.notcoded.codelib.server.ServerTime;
+import net.notcoded.codelib.util.server.ServerUtils;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -20,7 +20,7 @@ public class MinecraftServerMixin {
     private void tickHead(CallbackInfo ci) {
         if (!firstTickPassed) {
             firstTickPassed = true;
-            ServerTime.firstTick((MinecraftServer) (Object) this);
+            ServerUtils.firstTick((MinecraftServer) (Object) this);
         }
     }
 }
