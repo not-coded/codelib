@@ -19,7 +19,7 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
-          
+
       - name: Checkout sources
         uses: actions/checkout@v3
 
@@ -40,7 +40,7 @@ jobs:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to modrinth
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        run: ./gradlew
         with:
           arguments: modrinth
         # I have no ided if this will work
