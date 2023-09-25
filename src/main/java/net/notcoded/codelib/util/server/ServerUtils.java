@@ -1,14 +1,15 @@
-package net.notcoded.codelib.server;
+package net.notcoded.codelib.util.server;
 
 import net.minecraft.server.MinecraftServer;
+import net.notcoded.codelib.CodeLib;
 
 import java.util.ArrayList;
 
-public class ServerTime {
-    public static MinecraftServer server;
+import static net.notcoded.codelib.CodeLib.server;
 
+public class ServerUtils {
     public static void firstTick(MinecraftServer server) {
-        ServerTime.server = server;
+        CodeLib.server = server;
     }
 
 
@@ -26,6 +27,6 @@ public class ServerTime {
      */
 
     public static void runCommands(ArrayList<String> commands) {
-        commands.forEach(ServerTime::runCommand);
+        commands.forEach(ServerUtils::runCommand);
     }
 }

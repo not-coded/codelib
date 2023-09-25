@@ -4,7 +4,7 @@
   "package": "net.notcoded.codelib.mixins",
   "compatibilityLevel": "JAVA_8",
   "server": [
-    "MinecraftServerMixin"
+    "server.MinecraftServerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,10 +1,13 @@
 package net.notcoded.codelib.players;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.notcoded.codelib.server.ServerTime;
+import net.notcoded.codelib.CodeLib;
+import net.notcoded.codelib.util.server.ServerUtils;
 import net.notcoded.codelib.util.pos.EntityPos;
 import net.notcoded.codelib.util.item.ItemStackUtil;
 import net.minecraft.network.chat.TextComponent;
@@ -13,15 +16,15 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * Gives more functions to the player
+ */
+@Environment(EnvType.SERVER)
 public class ExtendedPlayer extends ServerPlayer {
-
-    /**
-     * Gives more functions to the player
-     */
 
     public AccuratePlayer player;
     public ExtendedPlayer(AccuratePlayer player) {
-        super(ServerTime.server, player.get().getLevel(), player.get().getGameProfile(), player.get().gameMode);
+        super(CodeLib.server, player.get().getLevel(), player.get().getGameProfile(), player.get().gameMode);
         this.player = player;
     }
 

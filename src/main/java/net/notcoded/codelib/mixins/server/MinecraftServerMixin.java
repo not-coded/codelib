@@ -1,6 +1,8 @@
-package net.notcoded.codelib.mixins;
+package net.notcoded.codelib.mixins.server;
 
-import net.notcoded.codelib.server.ServerTime;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.notcoded.codelib.util.server.ServerUtils;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -9,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MinecraftServer.class)
+@Environment(EnvType.SERVER)
 public class MinecraftServerMixin {
     @Unique
     boolean firstTickPassed = false;
@@ -17,7 +20,7 @@ public class MinecraftServerMixin {
     private void tickHead(CallbackInfo ci) {
         if (!firstTickPassed) {
             firstTickPassed = true;
-            ServerTime.firstTick((MinecraftServer) (Object) this);
+            ServerUtils.firstTick((MinecraftServer) (Object) this);
         }
     }
 }

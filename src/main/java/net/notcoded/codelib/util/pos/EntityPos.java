@@ -1,5 +1,7 @@
 package net.notcoded.codelib.util.pos;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -79,6 +81,7 @@ public class EntityPos {
         return Math.sqrt(x*x + y*y + z*z);
     }
 
+    @Environment(EnvType.SERVER)
     public void teleportPlayer(ServerLevel level, ServerPlayer player) {
         player.teleportTo(level, this.x, this.y,this.z,this.yaw,this.pitch);
     }
