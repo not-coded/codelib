@@ -16,21 +16,26 @@ Add the following to your `gradle.properties`
 codelib_version=...+minecraft_version
 
 # Example
-codelib_version=1.0.0+1.20
+codelib_version=1.0.1+1.20
 ```
 
 And `build.gradle`
 ```groovy
 repositories {
     maven {
-        url "https://github.com/not-coded/notcoded-maven/raw/fabric/"
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
     }
 }
 
+
 dependencies {
-    modApi "net.notcoded:codelib:${project.codelib_version}"
+    modApi "maven.modrinth:codelib:${project.codelib_version}"
 
     // you can include it directly if you want you don't want your users to download it
-    include "net.notcoded:codelib:${project.codelib_version}"
+    include "maven.modrinth:codelib:${project.codelib_version}"
 }
 ```
