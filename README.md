@@ -23,19 +23,14 @@ And `build.gradle`
 ```groovy
 repositories {
     maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
-        content {
-            includeGroup "maven.modrinth"
-        }
+        url "https://github.com/not-coded/notcoded-maven/raw/fabric/"
     }
 }
 
-
 dependencies {
-    modApi "maven.modrinth:codelib:${project.codelib_version}"
+    modApi "net.notcoded:codelib:${project.codelib_version}"
 
     // you can include it directly if you want you don't want your users to download it
-    include "maven.modrinth:codelib:${project.codelib_version}"
+    include "net.notcoded:codelib:${project.codelib_version}"
 }
 ```
