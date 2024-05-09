@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import net.notcoded.codelib.CodeLib;
 import net.notcoded.codelib.util.server.ServerUtils;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,24 +13,35 @@ import java.util.UUID;
 
 @Environment(EnvType.SERVER)
 public class AccuratePlayer {
-    private static List<AccuratePlayer> accuratePlayerList = new ArrayList<>();
 
-    public ServerPlayer player;
+    private static final List<AccuratePlayer> accuratePlayerList = new ArrayList<>();
+
     public UUID uuid;
+    public String name;
 
-    private AccuratePlayer(UUID uuid) {
+    private AccuratePlayer(UUID uuid, String name) {
         this.uuid = uuid;
-        this.player = CodeLib.server.getPlayerList().getPlayer(uuid);
+        this.name = name;
 
         accuratePlayerList.add(this);
     }
 
-    public static AccuratePlayer create(ServerPlayer player) {
+    public static AccuratePlayer create(@NotNull ServerPlayer player) {
+        return create(player.getUUID(), player.getScoreboardName());
+    }
+
+    public static AccuratePlayer create(UUID uuid, String name) {
         for(AccuratePlayer accuratePlayer : accuratePlayerList) {
-            if(accuratePlayer.uuid.equals(player.getUUID())) return accuratePlayer;
+            if(accuratePlayer.uuid == null || accuratePlayer.get() == null) {
+                accuratePlayerList.remove(accuratePlayer);
+                continue;
+            }
+
+            if(accuratePlayer.uuid.equals(uuid)) return accuratePlayer;
+
         }
 
-        return new AccuratePlayer(player.getUUID());
+        return new AccuratePlayer(uuid, name);
     }
 
     /**
@@ -37,6 +49,11 @@ public class AccuratePlayer {
      * @return Accurate player.
      */
     public ServerPlayer get() {
+        if(this.uuid == null) {
+            accuratePlayerList.remove(this);
+            return null;
+        }
+
         ServerPlayer player = CodeLib.server.getPlayerList().getPlayer(this.uuid);
 
         if(player == null) {
@@ -44,7 +61,8 @@ public class AccuratePlayer {
             return null;
         }
 
-        if(this.player != player) this.player = player;
-        return this.player;
+        if(this.name.isEmpty() && !player.getScoreboardName().isEmpty()) this.name = player.getScoreboardName();
+
+        return player;
     }
 }

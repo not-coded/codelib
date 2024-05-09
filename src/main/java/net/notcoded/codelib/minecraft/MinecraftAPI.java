@@ -17,6 +17,7 @@ public class MinecraftAPI {
      * @param name The name of the player, e.g. NotCoded
      * @return The uuid of the player, e.g. fcbf27a9-535e-466f-ae75-7c7959fba7f0
      */
+
     public static UUID getUUID(@NotNull String name) {
         if(name.trim().isEmpty() || name.length() < 3 || name.length() > 15) return null;
         String response;

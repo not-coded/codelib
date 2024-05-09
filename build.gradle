@@ -1,16 +1,14 @@
 plugins {
-	id 'fabric-loom' version '0.13-SNAPSHOT'
+	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-archivesBaseName = project.archives_base_name
 version = project.mod_version + "+" + project.minecraft_version
 group = project.maven_group
 
-repositories { }
+base {
+	archivesName = project.archives_base_name
+}
 
 dependencies {
 	//to change the versions see the gradle.properties file
@@ -39,12 +37,15 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
+	it.options.release = 8
 }
 
 java {
-	archivesBaseName = project.archives_base_name
 	withJavadocJar()
 	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 jar {

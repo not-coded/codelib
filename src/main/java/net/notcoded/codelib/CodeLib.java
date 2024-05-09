@@ -6,7 +6,7 @@ import net.minecraft.server.MinecraftServer;
 
 public class CodeLib implements ModInitializer {
 
-    protected static EnvType type = EnvType.CLIENT;
+    protected static EnvType type;
 
     public static Minecraft client;
 
@@ -26,6 +26,7 @@ public class CodeLib implements ModInitializer {
     }
 
     protected void loadClient() {
+        type = EnvType.CLIENT;
         client = Minecraft.getInstance();
     }
 }

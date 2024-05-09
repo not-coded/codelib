@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 public class ExtendedPlayer extends ServerPlayer {
 
     public AccuratePlayer player;
+
     public ExtendedPlayer(AccuratePlayer player) {
         super(CodeLib.server, player.get().getLevel(), player.get().getGameProfile(), player.get().gameMode);
         this.player = player;

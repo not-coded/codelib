@@ -1,4 +1,4 @@
-package net.notcoded.codelib.util.String;
+package net.notcoded.codelib.util.string;
 
 public class StringUtils {
     public static String firstArgumentToLowerCase(String input) {
