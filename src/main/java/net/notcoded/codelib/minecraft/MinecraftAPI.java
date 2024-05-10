@@ -1,16 +1,18 @@
 package net.notcoded.codelib.minecraft;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.notcoded.codelib.util.http.HttpAPI;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class MinecraftAPI {
+
+    public static HashMap<UUID, String> cachedNames = new HashMap<>();
+
+    public static HashMap<String, UUID> cachedUUIDs = new HashMap<>();
 
     /**
      * Returns the UUID of a name.
@@ -20,6 +22,9 @@ public class MinecraftAPI {
 
     public static UUID getUUID(@NotNull String name) {
         if(name.trim().isEmpty() || name.length() < 3 || name.length() > 15) return null;
+
+        if(cachedUUIDs.get(name) != null) return cachedUUIDs.get(name);
+
         String response;
 
         try {
@@ -28,7 +33,10 @@ public class MinecraftAPI {
 
         if(response != null && !response.trim().isEmpty())  {
             String uuid = new JsonParser().parse(response).getAsJsonObject().get("id").getAsString();
-            if (uuid != null && !uuid.trim().isEmpty() && (uuid.length() == 32 || uuid.length() == 36)) return UUID.fromString(uuid);
+            if (uuid != null && !uuid.trim().isEmpty() && (uuid.length() == 32 || uuid.length() == 36)) {
+                if(cachedUUIDs.get(name) != null) return cachedUUIDs.get(name);
+                return UUID.fromString(uuid);
+            }
         }
         return null;
     }
@@ -40,6 +48,8 @@ public class MinecraftAPI {
      */
 
     public static String getName(@NotNull UUID uuid){
+        if(cachedNames.get(uuid) != null) return cachedNames.get(uuid);
+
         String response;
 
         try {
@@ -49,7 +59,10 @@ public class MinecraftAPI {
         if(response != null && !response.trim().isEmpty()) {
             String name = new JsonParser().parse(response).getAsJsonObject().get("name").getAsString();
 
-            if (name != null && !name.trim().isEmpty() && (name.length() > 2 && name.length() < 16)) return name;
+            if (name != null && !name.trim().isEmpty() && (name.length() > 2 && name.length() < 16)) {
+                cachedUUIDs.put(name, uuid);
+                return name;
+            }
         }
 
         return null;

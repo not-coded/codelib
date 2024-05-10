@@ -8,7 +8,15 @@ import java.io.File;
 
 @Environment(EnvType.SERVER)
 public class MapUtils {
-    public boolean deleteStructure(ResourceLocation identifier) {
-        return new File(String.format("/world/generated/%s/structures", identifier.getNamespace()), identifier.getPath() + ".nbt").delete();
+
+    /**
+     * Gets the world name of a level.
+     * @param worldDirectoryName The world directory name (e.g. world [/world/....])
+     * @param identifier The namespace (e.g. minecraft:overworld)
+     * @return If the file was deleted successfully
+     */
+
+    public boolean deleteStructure(String worldDirectoryName, ResourceLocation identifier) {
+        return new File(String.format("/%s/generated/%s/structures", worldDirectoryName, identifier.getNamespace()), identifier.getPath() + ".nbt").delete();
     }
 }

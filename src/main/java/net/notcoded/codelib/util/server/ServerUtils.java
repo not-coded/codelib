@@ -1,5 +1,6 @@
 package net.notcoded.codelib.util.server;
 
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.MinecraftServer;
 import net.notcoded.codelib.CodeLib;
 
@@ -12,21 +13,33 @@ public class ServerUtils {
         CodeLib.server = server;
     }
 
-
     /**
      * Runs a command as the server (console).
      * @param command The command.
      */
-    public static void runCommand(String command) {
-        server.getCommands().performCommand(server.createCommandSourceStack(), command);
+    public static int runCommand(String command) {
+        return runCommand(command, true);
+    }
+
+    /**
+     * Runs a command as the server (console).
+     * @param command The command.
+     * @param giveFeedback Whether it should output in console/to opped players.
+     */
+    public static int runCommand(String command, boolean giveFeedback) {
+        CommandSourceStack commandSourceStack = server.createCommandSourceStack();
+        if(!giveFeedback) commandSourceStack.withSuppressedOutput();
+
+        return server.getCommands().performCommand(server.createCommandSourceStack(), command);
     }
 
     /**
      * Runs multiple commands as the server (console).
      * @param commands The commands.
+     * @param giveFeedback Whether it should output in console/to opped players.
      */
 
-    public static void runCommands(ArrayList<String> commands) {
-        commands.forEach(ServerUtils::runCommand);
+    public static void runCommands(ArrayList<String> commands, boolean giveFeedback) {
+        commands.forEach(cmd -> runCommand(cmd, giveFeedback));
     }
 }

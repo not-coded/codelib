@@ -56,19 +56,19 @@ public class StructureMap {
         String start = "execute in " + name.getNamespace() + ":" + name.getPath();
 
 
-        if(forceLoad) ServerUtils.runCommand(start + " run forceload add 0 0");
+        if(forceLoad) ServerUtils.runCommand(start + " run forceload add 0 0", false);
 
         if(!stringRotation.trim().isEmpty() && this.rotation != Rotation.NO_ROTATION) {
-            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:structure_block{mode:'LOAD',name:'%s:%s',posX:%s,posY:%s,posZ:%s,rotation:\"%s\"}", start, placePos.getX(), placePos.getY(), placePos.getZ(), this.id.getNamespace(), this.id.getPath(), pastePos.getX(), pastePos.getY(), pastePos.getZ(), stringRotation));
+            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:structure_block{mode:'LOAD',name:'%s:%s',posX:%s,posY:%s,posZ:%s,rotation:\"%s\"}", start, placePos.getX(), placePos.getY(), placePos.getZ(), this.id.getNamespace(), this.id.getPath(), pastePos.getX(), pastePos.getY(), pastePos.getZ(), stringRotation), false);
         } else if(this.rotation == Rotation.NO_ROTATION){
-            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:structure_block{mode:'LOAD',name:'%s:%s',posX:%s,posY:%s,posZ:%s}", start, placePos.getX(), placePos.getY(), placePos.getZ(), this.id.getNamespace(), this.id.getPath(), pastePos.getX(), pastePos.getY(), pastePos.getZ()));
+            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:structure_block{mode:'LOAD',name:'%s:%s',posX:%s,posY:%s,posZ:%s}", start, placePos.getX(), placePos.getY(), placePos.getZ(), this.id.getNamespace(), this.id.getPath(), pastePos.getX(), pastePos.getY(), pastePos.getZ()), false);
         }
 
         if(this.cleanUp) {
-            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:redstone_block", start, placePos.getX() + 1, placePos.getY(), placePos.getZ()));
+            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:redstone_block", start, placePos.getX() + 1, placePos.getY(), placePos.getZ()), false);
 
-            ServerUtils.runCommand(String.format("%s if block %s %s %s minecraft:structure_block run setblock %s %s %s air", start, placePos.getX(), placePos.getY(), placePos.getZ(), placePos.getX(), placePos.getY(), placePos.getZ()));
-            ServerUtils.runCommand(String.format("%s if block %s %s %s minecraft:redstone_block run setblock %s %s %s air", start, placePos.getX() + 1, placePos.getY(), placePos.getZ(), placePos.getX() + 1, placePos.getY(), placePos.getZ()));
+            ServerUtils.runCommand(String.format("%s if block %s %s %s minecraft:structure_block run setblock %s %s %s air", start, placePos.getX(), placePos.getY(), placePos.getZ(), placePos.getX(), placePos.getY(), placePos.getZ()), false);
+            ServerUtils.runCommand(String.format("%s if block %s %s %s minecraft:redstone_block run setblock %s %s %s air", start, placePos.getX() + 1, placePos.getY(), placePos.getZ(), placePos.getX() + 1, placePos.getY(), placePos.getZ()), false);
         }
     }
 
@@ -86,19 +86,19 @@ public class StructureMap {
         BlockPos pastePos = this.pastePos;
         boolean forceLoad = this.forceLoad;
 
-        if(forceLoad) ServerUtils.runCommand(start + " run forceload add 0 0");
+        if(forceLoad) ServerUtils.runCommand(start + " run forceload add 0 0", false);
 
         if(!stringRotation.trim().isEmpty() && this.rotation != Rotation.NO_ROTATION) {
-            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:structure_block{mode:'LOAD',name:'%s:%s',posX:%s,posY:%s,posZ:%s,rotation:\"%s\"}", start, placePos.getX(), placePos.getY(), placePos.getZ(), ResourceLocation.getNamespace(), ResourceLocation.getPath(), pastePos.getX(), pastePos.getY(), pastePos.getZ(), stringRotation));
+            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:structure_block{mode:'LOAD',name:'%s:%s',posX:%s,posY:%s,posZ:%s,rotation:\"%s\"}", start, placePos.getX(), placePos.getY(), placePos.getZ(), ResourceLocation.getNamespace(), ResourceLocation.getPath(), pastePos.getX(), pastePos.getY(), pastePos.getZ(), stringRotation), false);
         } else if(this.rotation == Rotation.NO_ROTATION){
-            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:structure_block{mode:'LOAD',name:'%s:%s',posX:%s,posY:%s,posZ:%s}", start, placePos.getX(), placePos.getY(), placePos.getZ(), ResourceLocation.getNamespace(), ResourceLocation.getPath(), pastePos.getX(), pastePos.getY(), pastePos.getZ()));
+            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:structure_block{mode:'LOAD',name:'%s:%s',posX:%s,posY:%s,posZ:%s}", start, placePos.getX(), placePos.getY(), placePos.getZ(), ResourceLocation.getNamespace(), ResourceLocation.getPath(), pastePos.getX(), pastePos.getY(), pastePos.getZ()), false);
         }
 
         if(this.cleanUp) {
-            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:redstone_block", start, placePos.getX() + 1, placePos.getY(), placePos.getZ()));
+            ServerUtils.runCommand(String.format("%s run setblock %s %s %s minecraft:redstone_block", start, placePos.getX() + 1, placePos.getY(), placePos.getZ()), false);
 
-            ServerUtils.runCommand(String.format("%s if block %s %s %s minecraft:structure_block run setblock %s %s %s air", start, placePos.getX(), placePos.getY(), placePos.getZ(), placePos.getX(), placePos.getY(), placePos.getZ()));
-            ServerUtils.runCommand(String.format("%s if block %s %s %s minecraft:redstone_block run setblock %s %s %s air", start, placePos.getX() + 1, placePos.getY(), placePos.getZ(), placePos.getX() + 1, placePos.getY(), placePos.getZ()));
+            ServerUtils.runCommand(String.format("%s if block %s %s %s minecraft:structure_block run setblock %s %s %s air", start, placePos.getX(), placePos.getY(), placePos.getZ(), placePos.getX(), placePos.getY(), placePos.getZ()), false);
+            ServerUtils.runCommand(String.format("%s if block %s %s %s minecraft:redstone_block run setblock %s %s %s air", start, placePos.getX() + 1, placePos.getY(), placePos.getZ(), placePos.getX() + 1, placePos.getY(), placePos.getZ()), false);
         }
     }
 
