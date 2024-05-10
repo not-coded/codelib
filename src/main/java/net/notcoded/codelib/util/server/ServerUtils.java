@@ -36,6 +36,15 @@ public class ServerUtils {
     /**
      * Runs multiple commands as the server (console).
      * @param commands The commands.
+     */
+
+    public static void runCommands(ArrayList<String> commands) {
+        commands.forEach(ServerUtils::runCommand);
+    }
+
+    /**
+     * Runs multiple commands as the server (console).
+     * @param commands The commands.
      * @param giveFeedback Whether it should output in console/to opped players.
      */
 
