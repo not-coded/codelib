@@ -11,7 +11,7 @@ public class MapUtils {
 
     /**
      * Gets the world name of a level.
-     * @param worldDirectoryName The world directory name (e.g. world [/world/....])
+     * @param worldDirectoryName The world directory name (e.g. world [/<STRONG>world</STRONG>/...])
      * @param identifier The namespace (e.g. minecraft:overworld)
      * @return If the file was deleted successfully
      */

@@ -15,7 +15,11 @@ public class ServerUtils {
 
     /**
      * Runs a command as the server (console).
+     * Runs {@link #runCommand(String, boolean)} but with the giveFeedback parameter set to true.
      * @param command The command.
+     * @return The command return value (1 is usually successful and 0 is unsuccessful)
+     *
+     *
      */
     public static int runCommand(String command) {
         return runCommand(command, true);
@@ -25,6 +29,7 @@ public class ServerUtils {
      * Runs a command as the server (console).
      * @param command The command.
      * @param giveFeedback Whether it should output in console/to opped players.
+     * @return The command return value (1 is usually successful and 0 is unsuccessful)
      */
     public static int runCommand(String command, boolean giveFeedback) {
         CommandSourceStack commandSourceStack = server.createCommandSourceStack();
@@ -35,6 +40,7 @@ public class ServerUtils {
 
     /**
      * Runs multiple commands as the server (console).
+     * Runs {@link #runCommands(ArrayList, boolean)}} but with the giveFeedback parameter set to true.
      * @param commands The commands.
      */
 
@@ -44,6 +50,7 @@ public class ServerUtils {
 
     /**
      * Runs multiple commands as the server (console).
+     * Runs {@link #runCommand(String, boolean)} for each {@code String} in {@code ArrayList<String>}.
      * @param commands The commands.
      * @param giveFeedback Whether it should output in console/to opped players.
      */

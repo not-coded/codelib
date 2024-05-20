@@ -14,33 +14,33 @@ import java.util.UUID;
 @Environment(EnvType.SERVER)
 public class AccuratePlayer {
 
-    private static final List<AccuratePlayer> accuratePlayerList = new ArrayList<>();
-
     public UUID uuid;
     public String name;
 
-    private AccuratePlayer(UUID uuid, String name) {
+    public AccuratePlayer(UUID uuid, String name) {
         this.uuid = uuid;
         this.name = name;
-
-        accuratePlayerList.add(this);
     }
+
+    public AccuratePlayer(@NotNull ServerPlayer player) {
+        this.uuid = player.getUUID();
+        this.name = player.getScoreboardName();
+    }
+
+    /**
+     * @deprecated
+     * @see #AccuratePlayer(ServerPlayer)
+     */
 
     public static AccuratePlayer create(@NotNull ServerPlayer player) {
         return create(player.getUUID(), player.getScoreboardName());
     }
 
+    /**
+     * @deprecated
+     * @see #AccuratePlayer(UUID, String)
+     */
     public static AccuratePlayer create(UUID uuid, String name) {
-        for(AccuratePlayer accuratePlayer : accuratePlayerList) {
-            if(accuratePlayer.uuid == null || accuratePlayer.get() == null) {
-                accuratePlayerList.remove(accuratePlayer);
-                continue;
-            }
-
-            if(accuratePlayer.uuid.equals(uuid)) return accuratePlayer;
-
-        }
-
         return new AccuratePlayer(uuid, name);
     }
 
@@ -49,20 +49,12 @@ public class AccuratePlayer {
      * @return Accurate player.
      */
     public ServerPlayer get() {
-        if(this.uuid == null) {
-            accuratePlayerList.remove(this);
-            return null;
-        }
-
+        if(this.uuid == null) return null;
         ServerPlayer player = CodeLib.server.getPlayerList().getPlayer(this.uuid);
 
-        if(player == null) {
-            accuratePlayerList.remove(this);
-            return null;
-        }
+        if(player == null) return null;
 
         if(this.name.isEmpty() && !player.getScoreboardName().isEmpty()) this.name = player.getScoreboardName();
-
         return player;
     }
 }

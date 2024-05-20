@@ -16,7 +16,7 @@ Add the following to your `gradle.properties`
 codelib_version=...+minecraft_version
 
 # Example
-codelib_version=1.0.1+1.16_combat-6
+codelib_version=1.0.4+1.16_combat-6
 ```
 
 And `build.gradle`

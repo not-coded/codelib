@@ -17,7 +17,7 @@ public class WorldUtil {
     /**
      * Splits the world name.
      * @param name The name
-     * @return ResourceLocation, e.g. minecraft (namespace) and overworld (path)
+     * @return ResourceLocation, e.g. <STRONG>minecraft</STRONG> (namespace) and <STRONG>overworld</STRONG> (path)
      */
     public static ResourceLocation getWorldName(String name) {
         String[] splitName = name.split(":");

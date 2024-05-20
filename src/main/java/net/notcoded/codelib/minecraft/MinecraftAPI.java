@@ -17,7 +17,7 @@ public class MinecraftAPI {
     /**
      * Returns the UUID of a name.
      * @param name The name of the player, e.g. NotCoded
-     * @return The uuid of the player, e.g. fcbf27a9-535e-466f-ae75-7c7959fba7f0
+     * @return The uuid of the player, e.g. {@code fcbf27a9-535e-466f-ae75-7c7959fba7f0}
      */
 
     public static UUID getUUID(@NotNull String name) {
@@ -44,7 +44,7 @@ public class MinecraftAPI {
     /**
      * Returns the name of an UUID.
      * @param uuid The uuid of a player, e.g. fcbf27a9-535e-466f-ae75-7c7959fba7f0
-     * @return The name of a player, e.g. NotCoded
+     * @return The name of a player, e.g. {@code NotCoded}
      */
 
     public static String getName(@NotNull UUID uuid){
