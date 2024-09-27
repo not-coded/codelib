@@ -6,15 +6,18 @@
   "name": "CodeLib",
   "description": "A Minecraft Fabric API/Library that provides useful features.",
   "entrypoints": {
-    "main": [
-      "net.notcoded.codelib.CodeLib"
+    "client": [
+      "net.notcoded.codelib.client.CodeLibClient"
+    ],
+    "server": [
+      "net.notcoded.codelib.server.CodeLibServer"
     ]
   },
   "authors": [
     "NotCoded"
   ],
   "contact": {
-    "homepage": "https://notcoded.is-a.dev/",
+    "homepage": "https://modrinth.com/mod/codelib",
     "sources": "https://github.com/not-coded/codelib",
     "issues": "https://github.com/not-coded/codelib/issues"
   },
@@ -23,10 +26,12 @@
   "environment": "*",
   "icon": "assets/codelib/logo.png",
   "mixins": [
-    "codelib.mixins.json"
+    "codelib-server.mixins.json",
+    "codelib-client.mixins.json"
   ],
 
   "depends": {
-    "minecraft": ">=1.20"
+    "minecraft": "${minecraftVersion}",
+    "java": ">=${javaVersion}"
   }
 }

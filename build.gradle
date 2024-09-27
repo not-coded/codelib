@@ -1,47 +1,103 @@
 plugins {
-	id 'fabric-loom' version '1.3-SNAPSHOT'
-	id 'com.modrinth.minotaur' version '2.+'
-	id 'maven-publish'
+	//id("dev.kikugie.stonecutter")
+	id("fabric-loom") version "1.7-SNAPSHOT"
+	id('net.ltgt.errorprone') version "4.0.1"
+	id("maven-publish")
 }
 
-version = project.mod_version + "+" + project.minecraft_version.substring(0, 4)
-group = project.maven_group
+archivesBaseName = property("mod.name")
+version = "${property("mod.version")}" + "+" + "${property("mod.version_name")}"
+group = property("mod.maven_group")
 
 base {
-	archivesName = project.archives_base_name
+	archivesName = archivesBaseName
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	minecraft "com.mojang:minecraft:${property('deps.minecraft')}"
 	mappings loom.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc:fabric-loader:${property('deps.fabric_loader')}"
+	errorprone implementation("com.google.errorprone:error_prone_core:${property('deps.errorprone')}")
 }
 
-processResources {
-	inputs.property "version", project.version
-	filteringCharset "UTF-8"
-
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+loom {
+	runConfigs.configureEach {
+		ideConfigGenerated true // Run configurations are not created for subprojects by default
+		runDir "../../run" // Use a shared run folder and just create separate worlds
 	}
 }
 
+def target = ">=${property("mod.min_target")}- <=${property("mod.max_target")}"
+
+processResources {
+	def expandProps = [
+			'version': project.version,
+			"minecraftVersion": target,
+			"javaVersion": project.property("deps.java")
+	]
+
+	filesMatching('fabric.mod.json') {
+		expand expandProps
+	}
+
+	inputs.properties(expandProps)
+}
+
 tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
-	it.options.release = 17
+	it.options.encoding = 'UTF-8'
+
+	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
+	it.options.getRelease().set(project.property("deps.java") as Integer)
 }
 
 java {
-	withJavadocJar()
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
 	withSourcesJar()
+	withJavadocJar()
 
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
+	def java = property("deps.java") == "8" ? JavaVersion.VERSION_1_8 : JavaVersion.VERSION_17
+
+	sourceCompatibility = java
+	targetCompatibility = java
 }
+
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.base.archivesName.get()}"}
+		rename { "${it}_${project.archivesBaseName}"}
+	}
+}
+
+def collectJars = tasks.register("collectJars", Copy) { copy ->
+
+	def task = tasks.named("remapJar")
+
+	dependsOn(task)
+
+	copy.from task
+	copy.into rootProject.buildDir.path + "/libs"
+}
+
+// Set up assemble to depend on the collectJars task, so it gets run on build.
+assemble {
+	dependsOn(collectJars)
+}
+
+if (stonecutter.current.isActive) {
+	loom {
+		runConfigs.client {
+			ideConfigGenerated = true
+			vmArgs "-Dmixin.debug.export=true"
+			runDir "../../run"
+		}
+	}
+
+	rootProject.tasks.register("buildActive") {
+		setGroup "project"
+
+		dependsOn tasks.named("build")
 	}
 }
 
@@ -68,6 +124,8 @@ publishing {
 	}
 }
 
+/*
+// TODO: implement this later with CHANGES.md
 modrinth {
 	token = System.getenv("MODRINTH_TOKEN")
 	projectId = "codelib"
@@ -82,3 +140,4 @@ modrinth {
 	loaders.add("quilt")
 	changelog = "### Read https://github.com/not-coded/codelib/releases/tag/${project.version}."
 }
+*/

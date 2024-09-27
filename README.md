@@ -5,7 +5,7 @@ yeahh!! this is the fabric library mod that i *sometimes* use in my projects.
 did i mention it has **0**, yes **zero** dependencies?
 
 ## Features
-* read the [wiki](https://github.com/not-coded/codelib/wiki)
+* read the javadocs somewhere (todo: implement javadocs github pages)
 * more coming soon
 
 ## How to use
@@ -16,7 +16,7 @@ Add the following to your `gradle.properties`
 codelib_version=...+minecraft_version
 
 # Example
-codelib_version=1.0.1+1.20
+codelib_version=2.0.0+1.20
 ```
 
 And `build.gradle`
