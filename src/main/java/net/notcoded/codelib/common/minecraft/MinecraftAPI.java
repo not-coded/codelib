@@ -25,7 +25,7 @@ public class MinecraftAPI {
      */
 
     public static String getUUID(String name) {
-        if(cachedUUIDs.get(name.toLowerCase(Locale.ROOT)) != null) return cachedUUIDs.get(name.toLowerCase(Locale.ROOT));
+        if(cachedUUIDs.containsKey(name.toLowerCase(Locale.ROOT))) return cachedUUIDs.get(name.toLowerCase(Locale.ROOT));
 
         String response;
         try {
@@ -54,7 +54,7 @@ public class MinecraftAPI {
      */
 
     public static String getName(String uuid) {
-        if (cachedNames.get(uuid.toLowerCase(Locale.ROOT)) != null) return cachedNames.get(uuid.toLowerCase(Locale.ROOT));
+        if (cachedNames.containsKey(uuid.toLowerCase(Locale.ROOT))) return cachedNames.get(uuid.toLowerCase(Locale.ROOT));
 
         String response;
 
