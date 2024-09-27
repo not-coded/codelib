@@ -61,6 +61,7 @@ public class ItemDisplayUtil {
     /**
      * Adds enchantment glint to an item.
      * @param itemStack The ItemStack that should get the glint.
+     * @return Tħe ItemStack with glint added.
      */
     public static ItemStack addGlint(ItemStack itemStack) {
         if (!itemStack.isEnchanted()) {
