@@ -2,6 +2,7 @@ package net.notcoded.codelib.server.util;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.MinecraftServer;
 import net.notcoded.codelib.server.CodeLibServer;
 
@@ -19,22 +20,30 @@ public class ServerUtils {
 
     /**
      * Runs a command as the server (console).
+     * Runs {@link #runCommand(String, boolean)} but with the giveFeedback parameter set to true.
      * @param command The command.
+     * @return The command return value (1 is usually successful and 0 is unsuccessful)
      */
-    public static void runCommand(String command) {
-        server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), command);
+    public static int runCommand(String command) {
+        return runCommand(command, true);
     }
 
     /**
-     * Runs a command as the server (console) but with no output (no message in chat or console).
+     * Runs a command as the server (console).
      * @param command The command.
+     * @param giveFeedback Whether it should output in console/to opped players.
+     * @return The command return value (1 is usually successful and 0 is unsuccessful)
      */
-    public static void runSilencedCommand(String command) {
-        server.getCommands().performPrefixedCommand(server.createCommandSourceStack().withSuppressedOutput(), command);
+    public static int runCommand(String command, boolean giveFeedback) {
+        CommandSourceStack commandSourceStack = server.createCommandSourceStack();
+        if(!giveFeedback) commandSourceStack.withSuppressedOutput();
+
+        return server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), command);
     }
 
     /**
      * Runs multiple commands as the server (console).
+     * Runs {@link #runCommands(List, boolean)}} but with the giveFeedback parameter set to true.
      * @param commands The commands.
      */
 
@@ -43,11 +52,13 @@ public class ServerUtils {
     }
 
     /**
-     * Runs multiple commands as the server (console) but with no output (no message in chat or console).
+     * Runs multiple commands as the server (console).
+     * Runs {@link #runCommand(String, boolean)} for each {@code String} in {@code ArrayList<String>}.
      * @param commands The commands.
+     * @param giveFeedback Whether it should output in console/to opped players.
      */
 
-    public static void runSilencedCommand(List<String> commands) {
-        commands.forEach(ServerUtils::runCommand);
+    public static void runCommands(List<String> commands, boolean giveFeedback) {
+        commands.forEach(cmd -> runCommand(cmd, giveFeedback));
     }
 }

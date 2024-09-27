@@ -8,7 +8,7 @@ public class WorldUtil {
     /**
      * Gets the world name of a level.
      * @param level The level.
-     * @return The name of the world, e.g. minecraft(namespace):overworld(path)
+     * @return The name of the world, e.g. <STRONG>minecraft</STRONG> (namespace) and <STRONG>overworld</STRONG> (path)
      */
     public static ResourceLocation getWorldName(@NotNull Level level) {
         return level.dimension().location();
