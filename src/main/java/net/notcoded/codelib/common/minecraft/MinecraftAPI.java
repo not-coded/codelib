@@ -25,7 +25,7 @@ public class MinecraftAPI {
      */
 
     public static String getUUID(String name) {
-        if(name.trim().isEmpty() || name.length() < 3 || name.length() > 15) return null;
+        if(name.trim().isEmpty()) return null;
         if(cachedUUIDs.containsKey(name.toLowerCase(Locale.ROOT))) return cachedUUIDs.get(name.toLowerCase(Locale.ROOT));
 
         String response;
@@ -70,7 +70,7 @@ public class MinecraftAPI {
         JsonElement result = parseString(response);
         String name = result.getAsJsonObject().get("name").getAsString();
 
-        if (name != null && !name.trim().isEmpty() && (name.length() > 2 && name.length() < 16)) {
+        if (name != null && !name.trim().isEmpty()) {
             cachedUUIDs.put(name, uuid.toLowerCase(Locale.ROOT));
             return name;
         }
