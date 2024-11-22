@@ -48,6 +48,9 @@ tasks.withType(JavaCompile).configureEach {
 
 	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
 	it.options.getRelease().set(project.property("deps.java") as Integer)
+
+	// Fixes Error Prone INIT policy
+	it.options.compilerArgs << '--should-stop=ifError=FLOW'
 }
 
 java {
