@@ -1,8 +1,13 @@
 package net.notcoded.codelib.common.util.item;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
+//? if <=1.18.2 {
+/*import net.minecraft.util.registry.Registry;
+*///?} else if >=1.19.4 {
+import net.minecraft.registry.Registries;
+//?}
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 
 public class BlockUtil {
 
@@ -22,7 +27,12 @@ public class BlockUtil {
      */
     @SuppressWarnings("StringSplitter")
     public static String blockToText(Block block) {
-        String[] splitRegistryKey = BuiltInRegistries.BLOCK.getKey(block).toString().split(":");
+        //? if <=1.18.2 {
+        /*String[] splitRegistryKey = Registry.BLOCK.getKey(block).toString().split(":");
+        *///?} else if >=1.19.4 {
+        String[] splitRegistryKey = Registries.BLOCK.getKey(block).toString().split(":");
+        //?}
+
         if (splitRegistryKey.length < 2) return splitRegistryKey[0];
         return splitRegistryKey[1];
     }

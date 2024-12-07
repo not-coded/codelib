@@ -2,11 +2,13 @@ package net.notcoded.codelib.common.util.pos;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 public class EntityPos {
 
@@ -29,14 +31,14 @@ public class EntityPos {
     }
 
     public EntityPos(Entity entity) {
-        this(entity.getX(), entity.getY(), entity.getZ(), entity.getYRot(), entity.getXRot());
+        this(entity.getX(), entity.getY(), entity.getZ(), entity.getYaw(0f), entity.getPitch(0f));
     }
 
     public EntityPos(BlockPos blockPos) {
         this(blockPos.getX(), blockPos.getY(), blockPos.getZ());
     }
 
-    public EntityPos(Vec3 vec3) {
+    public EntityPos(Vec3d vec3) {
         this(vec3.x, vec3.y, vec3.z);
     }
 
@@ -83,8 +85,8 @@ public class EntityPos {
     }
 
     @Environment(EnvType.SERVER)
-    public void teleportPlayer(ServerLevel level, ServerPlayer player) {
-        player.teleportTo(level, this.x, this.y, this.z, this.yaw, this.pitch);
+    public void teleportPlayer(ServerWorld level, ServerPlayerEntity player) {
+        player.teleport(level, this.x, this.y, this.z, this.yaw, this.pitch);
     }
 
     @Override

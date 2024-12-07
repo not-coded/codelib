@@ -1,6 +1,7 @@
 package net.notcoded.codelib.common.util.pos;
 
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
+
 public class PositionUtil {
 
     /**

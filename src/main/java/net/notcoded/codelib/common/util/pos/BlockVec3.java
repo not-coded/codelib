@@ -1,8 +1,8 @@
 package net.notcoded.codelib.common.util.pos;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 public class BlockVec3 {
 
@@ -22,7 +22,7 @@ public class BlockVec3 {
         this.z = (int)Math.floor(z);
     }
 
-    public BlockVec3(Vec3 vec3) {
+    public BlockVec3(Vec3d vec3) {
         this.x = (int)Math.floor(vec3.x);
         this.y = (int)Math.floor(vec3.y);
         this.z = (int)Math.floor(vec3.z);

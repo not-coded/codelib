@@ -1,10 +1,11 @@
 package net.notcoded.codelib.server.util.structure;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
-import net.notcoded.codelib.server.CodeLibServer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.notcoded.codelib.common.util.world.WorldUtil;
 import net.notcoded.codelib.server.util.ServerUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,10 +14,11 @@ import org.jetbrains.annotations.NotNull;
  */
 
 @SuppressWarnings("EmptyBlockTag")
+@Environment(EnvType.SERVER)
 public class StructureMap {
 
     // Default
-    public ResourceLocation id;
+    public Identifier id;
     public Rotation rotation;
     public boolean cleanUp;
 
@@ -25,13 +27,13 @@ public class StructureMap {
     public BlockPos pastePos;
     public boolean forceLoad;
 
-    public StructureMap(@NotNull ResourceLocation structureId, @NotNull Rotation rotation, boolean cleanUp) {
+    public StructureMap(@NotNull Identifier structureId, @NotNull Rotation rotation, boolean cleanUp) {
         this.id = structureId;
         this.rotation = rotation;
         this.cleanUp = cleanUp;
     }
 
-    public StructureMap(@NotNull ResourceLocation structureId, @NotNull Rotation rotation, boolean cleanUp, @NotNull BlockPos placePos, @NotNull BlockPos pastePos, boolean forceLoad) {
+    public StructureMap(@NotNull Identifier structureId, @NotNull Rotation rotation, boolean cleanUp, @NotNull BlockPos placePos, @NotNull BlockPos pastePos, boolean forceLoad) {
         this.id = structureId;
         this.rotation = rotation;
         this.cleanUp = cleanUp;
@@ -49,8 +51,8 @@ public class StructureMap {
      * @param pastePos Where the map is going to get pasted in.
      * @param forceLoad If the chunk should get force loaded.
      */
-    public void pasteMap(@NotNull ServerLevel level, @NotNull BlockPos placePos, @NotNull BlockPos pastePos, boolean forceLoad) {
-        String start = "execute in " + level.dimension().location().getNamespace() + ":" + level.dimension().location().getPath();
+    public void pasteMap(@NotNull World level, @NotNull BlockPos placePos, @NotNull BlockPos pastePos, boolean forceLoad) {
+        String start = "execute in " + WorldUtil.getStringWorldName(level);
 
         if(forceLoad) ServerUtils.runCommand(start + " run forceload add 0 0", false);
         ServerUtils.runCommand(this.returnCommand(level, placePos, pastePos), false);
@@ -67,7 +69,7 @@ public class StructureMap {
      * Pastes a map with some pre-set parameters.
      * @param level The level where is going to get pasted in.
      */
-    public void pasteMap(@NotNull ServerLevel level) {
+    public void pasteMap(@NotNull World level) {
         if(this.placePos == null || this.pastePos == null) return;
         this.pasteMap(level, this.placePos, this.pastePos, this.forceLoad);
     }
@@ -79,8 +81,8 @@ public class StructureMap {
      * @param pastePos Where the map is going to get pasted in.
      * @return The command (/execute in dimension:name run setblock ...).
      */
-    public String returnCommand(@NotNull ServerLevel level, @NotNull BlockPos placePos, @NotNull BlockPos pastePos) {
-        String start = "execute in " + level.dimension().location().getNamespace() + ":" + level.dimension().location().getPath();
+    public String returnCommand(@NotNull World level, @NotNull BlockPos placePos, @NotNull BlockPos pastePos) {
+        String start = "execute in " + WorldUtil.getStringWorldName(level);
         String rotation = this.rotation != Rotation.NO_ROTATION ? ",rotation:\"" + this.rotation.id + "\"" : "";
 
         return String.format("%s run setblock %s %s %s minecraft:structure_block{mode:'LOAD',name:'%s:%s',posX:%s,posY:%s,posZ:%s%s}", start, placePos.getX(), placePos.getY(), placePos.getZ(), this.id.getNamespace(), this.id.getPath(), pastePos.getX(), pastePos.getY(), pastePos.getZ(), rotation);
@@ -91,7 +93,7 @@ public class StructureMap {
      * @param level The level where is going to get pasted in.
      * @return The command (/execute in dimension:name run setblock ...).
      */
-    public String returnCommand(@NotNull ServerLevel level) {
+    public String returnCommand(@NotNull World level) {
         if(this.placePos == null || this.pastePos == null) return null;
         return this.returnCommand(level, this.placePos, this.pastePos);
     }

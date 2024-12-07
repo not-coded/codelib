@@ -2,7 +2,7 @@ package net.notcoded.codelib.server.util.structure;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
 
 import java.io.File;
 
@@ -14,7 +14,7 @@ public class MapUtils {
      * @param identifier The namespace (e.g. minecraft:overworld)
      * @return If the file was deleted successfully
      */
-    public boolean deleteStructure(String worldDirectoryName, ResourceLocation identifier) {
+    public boolean deleteStructure(String worldDirectoryName, Identifier identifier) {
         return new File(String.format("/%s/generated/%s/structures", worldDirectoryName, identifier.getNamespace()), identifier.getPath() + ".nbt").delete();
     }
 }
