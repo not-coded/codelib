@@ -11,4 +11,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MinecraftVersion {
     String[] minecraft() default "";
+    boolean enforceAll() default true;
 }
