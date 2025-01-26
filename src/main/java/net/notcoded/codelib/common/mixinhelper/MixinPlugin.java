@@ -36,19 +36,15 @@ public class MixinPlugin implements IMixinConfigPlugin {
         }
 
         List<String> minecraftVersions = new ArrayList<>();
+        boolean enforceAllPredicates = true;
 
-        for(Annotation annotation : clazz.getAnnotations()) { // this is cursed but it somehow works
-            if(annotation.annotationType().descriptorString().equals(MinecraftVersion.class.descriptorString())) {
-                try {
-                    minecraftVersions = Arrays.asList((String[]) annotation.annotationType().getMethod("minecraft").invoke(annotation));
-                    break;
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                    throw new RuntimeException("Failed to get the value of MinecraftVersion annotation!");
-                }
-            }
+        if (clazz.isAnnotationPresent(MinecraftVersion.class)) {
+            MinecraftVersion minecraftVersion = clazz.getAnnotation(MinecraftVersion.class);
+            minecraftVersions = Arrays.asList(minecraftVersion.minecraft());
+            enforceAllPredicates = minecraftVersion.enforceAll();
         }
 
-        if(minecraftVersions.isEmpty()) return true;
+        if (minecraftVersions.isEmpty()) return true;
 
         Version gameVersion = FabricLoader.getInstance().getModContainer("minecraft").get().getMetadata().getVersion(); // 1.21
         Set<VersionPredicate> versions;
@@ -59,7 +55,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
             throw new RuntimeException(e);
         }
 
-        return testVersions(versions, gameVersion, false);
+        return testVersions(versions, gameVersion, enforceAllPredicates);
     }
 
     public boolean testVersions(Set<VersionPredicate> versions, Version gameVersion, boolean forceAll) {
