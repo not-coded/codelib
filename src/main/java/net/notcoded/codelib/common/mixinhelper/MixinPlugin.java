@@ -59,22 +59,16 @@ public class MixinPlugin implements IMixinConfigPlugin {
             throw new RuntimeException(e);
         }
 
-        if(minecraftVersions.size() == 2) {
-            String mcVer1 = minecraftVersions.get(0);
-            String mcVer2 = minecraftVersions.get(1);
+        return testVersions(versions, gameVersion, false);
+    }
 
-            Iterator<VersionPredicate> iterator = versions.iterator();
-            // NOTE: "@MinecraftVersion(minecraft = {">=1.21", "<=1.21.5"})" would be correct syntax for this (example).
-            if(mcVer1.contains(">") && mcVer2.contains("<")) {
-                return iterator.next().test(gameVersion) && iterator.next().test(gameVersion);
-            }
-        }
-
+    public boolean testVersions(Set<VersionPredicate> versions, Version gameVersion, boolean forceAll) {
         for(VersionPredicate minecraftVersion : versions) {
-            if (minecraftVersion.test(gameVersion)) return true;
+            boolean matches = minecraftVersion.test(gameVersion);
+            if (matches != forceAll) return matches;
         }
 
-        return false;
+        return forceAll;
     }
 
     @Override
