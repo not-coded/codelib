@@ -38,8 +38,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
         List<String> minecraftVersions = new ArrayList<>();
         boolean enforceAllPredicates = true;
 
-        if (clazz.isAnnotationPresent(MinecraftVersion.class)) {
-            MinecraftVersion minecraftVersion = clazz.getAnnotation(MinecraftVersion.class);
+        MinecraftVersion minecraftVersion = clazz.getAnnotation(MinecraftVersion.class);
+        if (minecraftVersion != null) {
             minecraftVersions = Arrays.asList(minecraftVersion.minecraft());
             enforceAllPredicates = minecraftVersion.enforceAll();
         }
