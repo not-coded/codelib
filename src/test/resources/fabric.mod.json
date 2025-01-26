@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "codelib-test",
+  "version": "1.0.0",
+
+  "name": "CodeLib Test",
+  "description": "Testing CodeLib",
+  "entrypoints": {
+    "main": [
+      "net.notcoded.codelibtest.CodeLibTest"
+    ]
+  },
+  "authors": [
+    "NotCoded"
+  ],
+
+  "environment": "*",
+  "mixins": ["codelib-test.mixins.json"],
+  "depends": {
+    "minecraft": "*",
+    "codelib": "*"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.notcoded.codelibtest.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "MinecraftClientMixin1165",
+    "MinecraftClientMixin121"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "plugin": "net.notcoded.codelib.common.mixinhelper.MixinPlugin"
+}
