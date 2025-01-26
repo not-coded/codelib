@@ -40,7 +40,7 @@ public class ServerUtils {
         //? if <=1.18.2 {
         /*return server.getCommandManager().execute(commandSourceStack, command);
         *///?} else if >=1.19.4 {
-        /*? if <=1.20.1 {*/ /* return *//*?}*/ server.getCommandManager().executeWithPrefix(commandSourceStack, command);
+        /*? if <=1.20.1 {*/  /*return *//*?}*/ server.getCommandManager().executeWithPrefix(commandSourceStack, command);
         //?}
 
         //? if >=1.21 {

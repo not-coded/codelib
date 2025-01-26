@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
 
 public class HttpAPI {
 
-    private static String userAgent = "Mozilla/5.0 (compatible; codelib; +https://github.com/not-coded/codelib)";
+    private static final String userAgent = "Mozilla/5.0 (compatible; codelib; +https://github.com/not-coded/codelib)";
 
     /**
      * Same as {@link HttpAPI#get(URL)} but with the ability to set the User Agent.

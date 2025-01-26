@@ -1,4 +1,4 @@
-package net.notcoded.codelib.common.minecraft;
+package net.notcoded.codelib.common.util.minecraft;
 
 import com.google.gson.JsonElement;
 import net.notcoded.codelib.common.util.http.HttpAPI;
@@ -6,7 +6,6 @@ import net.notcoded.codelib.common.util.http.HttpAPI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.UUID;
 
 import static net.notcoded.codelib.common.util.version.VersionUtil.parseString;
 
@@ -52,7 +51,7 @@ public class MinecraftAPI {
      */
 
     public static String getName(String uuid) {
-        if(!(uuid.length() == 32) && !(uuid.length() == 36)) return null;
+        if(uuid.length() != 32 && uuid.length() != 36) return null;
         if (cachedNames.containsKey(uuid.toLowerCase(Locale.ROOT))) return cachedNames.get(uuid.toLowerCase(Locale.ROOT));
 
         String response;
