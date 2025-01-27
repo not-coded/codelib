@@ -38,7 +38,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         List<String> minecraftVersions = new ArrayList<>();
 
         for(Annotation annotation : clazz.getAnnotations()) { // this is cursed but it somehow works
-            if(annotation.annotationType().descriptorString().equals(MinecraftVersion.class.descriptorString())) {
+            if(annotation.annotationType().toGenericString().equals(MinecraftVersion.class.toGenericString())) {
                 try {
                     minecraftVersions = Arrays.asList((String[]) annotation.annotationType().getMethod("minecraft").invoke(annotation));
                     break;
