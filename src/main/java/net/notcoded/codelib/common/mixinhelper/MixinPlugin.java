@@ -30,7 +30,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         Class<?> clazz;
         try {
-            clazz = ClassLoader.getSystemClassLoader().loadClass(mixinClassName);
+            clazz = Thread.currentThread().getContextClassLoader().loadClass(mixinClassName);
         } catch (ClassNotFoundException e) {
             return true; // no idea what happened
         }
