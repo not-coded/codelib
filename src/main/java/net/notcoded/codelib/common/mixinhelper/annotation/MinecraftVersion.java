@@ -1,7 +1,5 @@
 package net.notcoded.codelib.common.mixinhelper.annotation;
 
-import org.spongepowered.asm.mixin.Mixin;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
