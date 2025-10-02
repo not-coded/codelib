@@ -36,19 +36,15 @@ public class MixinPlugin implements IMixinConfigPlugin {
         }
 
         List<String> minecraftVersions = new ArrayList<>();
+        boolean enforceAllPredicates = true;
 
-        for(Annotation annotation : clazz.getAnnotations()) { // this is cursed but it somehow works
-            if(annotation.annotationType().toGenericString().equals(MinecraftVersion.class.toGenericString())) {
-                try {
-                    minecraftVersions = Arrays.asList((String[]) annotation.annotationType().getMethod("minecraft").invoke(annotation));
-                    break;
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                    throw new RuntimeException("Failed to get the value of MinecraftVersion annotation!");
-                }
-            }
+        MinecraftVersion minecraftVersion = clazz.getAnnotation(MinecraftVersion.class);
+        if (minecraftVersion != null) {
+            minecraftVersions = Arrays.asList(minecraftVersion.minecraft());
+            enforceAllPredicates = minecraftVersion.enforceAll();
         }
 
-        if(minecraftVersions.isEmpty()) return true;
+        if (minecraftVersions.isEmpty()) return true;
 
         Version gameVersion = FabricLoader.getInstance().getModContainer("minecraft").get().getMetadata().getVersion(); // 1.21
         Set<VersionPredicate> versions;
@@ -59,22 +55,16 @@ public class MixinPlugin implements IMixinConfigPlugin {
             throw new RuntimeException(e);
         }
 
-        if(minecraftVersions.size() == 2) {
-            String mcVer1 = minecraftVersions.get(0);
-            String mcVer2 = minecraftVersions.get(1);
+        return testVersions(versions, gameVersion, enforceAllPredicates);
+    }
 
-            Iterator<VersionPredicate> iterator = versions.iterator();
-            // NOTE: "@MinecraftVersion(minecraft = {">=1.21", "<=1.21.5"})" would be correct syntax for this (example).
-            if(mcVer1.contains(">") && mcVer2.contains("<")) {
-                return iterator.next().test(gameVersion) && iterator.next().test(gameVersion);
-            }
-        }
-
+    public boolean testVersions(Set<VersionPredicate> versions, Version gameVersion, boolean forceAll) {
         for(VersionPredicate minecraftVersion : versions) {
-            if (minecraftVersion.test(gameVersion)) return true;
+            boolean matches = minecraftVersion.test(gameVersion);
+            if (matches != forceAll) return matches;
         }
 
-        return false;
+        return forceAll;
     }
 
     @Override
