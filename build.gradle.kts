@@ -1,7 +1,7 @@
 plugins {
     id("fabric-loom") version "1.9.2"
     id("com.modrinth.minotaur") version "2.+"
-    id("net.ltgt.errorprone") version "4.1.0"
+    id("net.ltgt.errorprone") version "4.3.0"
     id("maven-publish")
 }
 
